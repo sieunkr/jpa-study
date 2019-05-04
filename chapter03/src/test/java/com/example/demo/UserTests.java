@@ -38,7 +38,7 @@ public class UserTests {
     }
 
     @Test
-    public void 사용자_이름_변경_테스트(){
+    public void 사용자_이름_변경_테스트() throws Exception {
 
         userDao.changeName("sieunkr@gmail.com", "sieunkim");
 

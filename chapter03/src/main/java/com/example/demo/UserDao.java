@@ -1,6 +1,7 @@
 package com.example.demo;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -34,20 +35,35 @@ public class UserDao {
 
     }
 
-    //TODO:트랜잭션
-    public void changeName(String email, String name){
 
+    //TODO:트랜잭션
+    @Transactional(rollbackOn = Exception.class)
+    public void changeName(String email, String name) throws Exception {
+
+        User user = entityManager.find(User.class, email);
+        user.changeName(name);
+
+        //Checked Exception 발생시 롤백을 원한다면, rollbackOn 을 붙여야 함
+        throw new Exception("dd");
+
+        /*
         EntityTransaction entityTransaction = entityManager.getTransaction();
 
         try {
             entityTransaction.begin();
             User user = entityManager.find(User.class, email);
             user.changeName(name);
-            entityTransaction.commit();
+
+            throw new IOException("dd");
+
         }
-        catch(Exception e){
+        catch(IOException e){
             entityTransaction.rollback();
         }
+        finally {
+            entityTransaction.commit();
+        }
+        */
 
     }
 
