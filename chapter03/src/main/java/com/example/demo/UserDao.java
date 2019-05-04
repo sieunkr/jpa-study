@@ -4,6 +4,7 @@ package com.example.demo;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -36,8 +37,17 @@ public class UserDao {
     //TODO:트랜잭션
     public void changeName(String email, String name){
 
-        User user = entityManager.find(User.class, email);
-        user.changeName(name);
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        try {
+            entityTransaction.begin();
+            User user = entityManager.find(User.class, email);
+            user.changeName(name);
+            entityTransaction.commit();
+        }
+        catch(Exception e){
+            entityTransaction.rollback();
+        }
 
     }
 
