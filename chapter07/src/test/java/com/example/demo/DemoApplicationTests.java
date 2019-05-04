@@ -35,7 +35,7 @@ public class DemoApplicationTests {
         Date date = new Date();
         MembershipCard membershipCard = new MembershipCard("1", user, new Timestamp(date.getTime()));
         //영속 컨텍스트 까지만 저장되고 롤백 됨 = 실제 DB에 저장하지 않음
-        //DataJPATest 에서 기본적으로 @Transactional 적용 되는 듯
+        //DataJPATest 에서 기본적으로 @Transactional 및 롤백 적용 되는 듯
         entityManager.persist(membershipCard);
 
         MembershipCard membershipCard1 = entityManager.find(MembershipCard.class, "1");
