@@ -150,3 +150,42 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialec
 
 
 
+
+
+
+
+# FetchType.LAZY, EAGER
+
+- LAZY 지연 로딩 : Join 걸지 않고 조회
+- EAGER 즉시 로딩 : Join 걸고 조회
+
+#### LAZY
+지연로딩은 연관 객체를 실제 사용하는 시점에서 로딩
+
+select membership0_.card_number as card_num1_0_0_, membership0_.enabled as enabled2_0_0_, membership0_.expiry_date as expiry_d3_0_0_, membership0_.user_email as user_ema4_0_0_ from membership_card membership0_ where membership0_.card_number=?
+
+#### EAGER
+select membership0_.card_number as card_num1_0_0_, membership0_.enabled as enabled2_0_0_, membership0_.expiry_date as expiry_d3_0_0_, membership0_.user_email as user_ema4_0_0_, user1_.email as email1_1_1_, user1_.create_date as create_d2_1_1_, user1_.name as name3_1_1_ from membership_card membership0_ left outer join user user1_ on membership0_.user_email=user1_.email where membership0_.card_number=?
+
+@OneToOne 어노테이션은 EAGER 를 기본으로 한다. 즉, Fetch 를 따로 지정하지 않으면 엔티티를 로딩할 때 @OneToOne 으로 매핑한 연관 객체도 함께 로딩한다. 연관 객체를 즉시로딩하기 위해서 외부 조인을 사용한다. 
+
+
+# 1:1 양방향 연관
+
+JPA 는 1:1 연관에서 물리적으로 존재하지 않는 연관을 처리하기 위해서 mappedBy 를 사용한다. 
+
+ 생략..
+#### JoinColumn vs PrimaryKeyJoinColumn
+차이 나중에 확인해보자. 조금 어려운 듯
+
+
+
+
+# N:1 연관
+
+#### Fetch
+
+@ManyToOne 어노테이션은 FetchType.EAGER 를 기본으로 사용. 
+
+설명 생략..
+
